@@ -1,0 +1,170 @@
+doctype html
+html
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Meraki Scanning Dashboard for University
+    link(href="http://www.cisco.com/web/fw/cisco-ui/2.0.2/dist/css/cui-standard.min.css", rel="stylesheet")
+    link(href="/css/dashboard.css", rel="stylesheet")
+  body.cui
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', crossorigin="anonymous")
+    script(src='/js/dashboard.js')
+    nav#styleguideheader.header(role='navigation')
+      .container-fluid
+        .header-panels
+          .header-panel.hidden-md-down
+            .header__logo
+              img(src='/img/meraki-logo.png' style='width: 80px; padding-top: 5px;')
+            .header__logo
+              img(src='/img/uni-logo.png' style='width: 70px; padding-top: 5px')
+            h1.header__title
+              span Meraki Scanning Dashboard for University
+          .header-panel.header-panel--right.hidden-md-down
+            .header-item
+              ul#tabsheader.tabs
+                li#tabsheader-1.tab.active
+                  a(tabindex='0')
+                    .tab__heading Attendance
+                li#tabsheader-2.tab
+                  a(tabindex='0')
+                    .tab__heading Location
+
+    .content
+      .container-fluid
+        .section
+          .flex-center-vertical
+            h1 Professor Attendance
+            .flex-fluid.text-right
+              .form-group.form-group--inline.dropdown.filter-group.hidden
+                .form-group__text.select
+                  select#professor
+                    option(value="all", selected) All
+                    each prof, p in data
+                      option(value=prof.name)= prof.name
+                  span.label.label--primary.label--bordered.filter-label(for='professor') Professor
+              .form-group.form-group--inline.dropdown.filter-group
+                .form-group__text.select
+                  select#showby(onchange='changeShowBy()')
+                    option(value="daily") Daily
+                    option(value="weekly") Weekly
+                  span.label.label--primary.label--bordered.filter-label(for='showby') Show By
+              .form-group.form-group--inline.filter-group
+                .form-group__text
+                  input#date(type='date', onchange='changeDate()')
+                  span.label.label--primary.label--bordered.filter-label(for='date') Date
+
+        .section
+          .responsive-table#weeklytable.hidden
+            table.table.table--lined.table--selectable
+              thead
+                tr
+                  th.text-center Name
+                  th.text-center Email
+                  th.text-center Last Connected AP
+                  th.text-center#dayone
+                  th.text-center#daytwo
+                  th.text-center#daythree
+                  th.text-center#dayfour
+                  th.text-center#dayfive
+                  th.text-center#daysix
+                  th.text-center#dayseven
+              tbody
+                each prof, p in data
+                  tr
+                    td.text-center
+                      span= prof.name
+                    td.text-center
+                      span= prof.email
+                    td.text-center
+                      span= prof.aps[prof.aps.length-1]
+                    td.text-center
+                      span.weeklyattendance(data-prof=(prof.name).replace(" ", "_"), data-day='dayone')
+                    td.text-center
+                      span.weeklyattendance(data-prof=(prof.name).replace(" ", "_"), data-day='daytwo')
+                    td.text-center
+                      span.weeklyattendance(data-prof=(prof.name).replace(" ", "_"), data-day='daythree')
+                    td.text-center
+                      span.weeklyattendance(data-prof=(prof.name).replace(" ", "_"), data-day='dayfour')
+                    td.text-center
+                      span.weeklyattendance(data-prof=(prof.name).replace(" ", "_"), data-day='dayfive')
+                    td.text-center
+                      span.weeklyattendance(data-prof=(prof.name).replace(" ", "_"), data-day='daysix')
+                    td.text-center
+                      span.weeklyattendance(data-prof=(prof.name).replace(" ", "_"), data-day='dayseven')
+          .responsive-table#dailytable
+            table.table.table--lined.table--selectable
+              thead
+                tr
+                  th.text-center Name
+                  th.text-center Email
+                  th.text-center Last Connected AP
+                  th.time 07:00
+                  th.time 08:00
+                  th.time 09:00
+                  th.time 10:00
+                  th.time 11:00
+                  th.time 12:00
+                  th.time 13:00
+                  th.time 14:00
+                  th.time 15:00
+                  th.time 16:00
+                  th.time 17:00
+                  th.time 18:00
+                  th.time 19:00
+                  th.time 20:00
+                  th.time 21:00
+              tbody
+                each prof, p in data
+                  tr
+                    td.text-center
+                      span= prof.name
+                    td.text-center
+                      span= prof.email
+                    td.text-center
+                      span= prof.aps[prof.aps.length-1]
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='07')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='08')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='09')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='10')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='11')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='12')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='13')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='14')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='15')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='16')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='17')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='18')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='19')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='20')
+                        .progressbar__fill
+                    td.line
+                      .dailyattendance.progressbar.progressbar--small.progressbar--dark(data-percentage=100, data-prof=(prof.name).replace(" ", "_"), data-time='21')
+                        .progressbar__fill
+    #hiddendata.hidden(data-weekly=weeklytimestamps, data-daily=dailytimestamps)

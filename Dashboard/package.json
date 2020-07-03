@@ -1,0 +1,17 @@
+{
+  "name": "meraki-measure-assistance-dashboard",
+  "version": "1.0.0",
+  "description": "Cisco Meraki Measure Assistance for University Dashboard Demo",
+  "main": "merakiscanning.js",
+  "scripts": {
+    "start": "node merakiscanning.js"
+  },
+  "author": "Alvin Lau",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.14.0",
+    "mongoose": "^5.9.15",
+    "pug": "^3.0.0"
+  }
+}
